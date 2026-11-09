@@ -3,3 +3,7 @@ streamlit
 pandas
 python-dotenv
 tiktoken
+llama-index-core
+llama-index-llms-openai
+llama-index-embeddings-openai
+pdfplumber
