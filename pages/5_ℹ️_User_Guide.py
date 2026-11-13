@@ -19,26 +19,36 @@ st.set_page_config(
     page_icon="📖",
 )
 
-# Custom CSS to add the background image and style containers
+# Custom CSS with Light and Dark Mode Support
 st.markdown(
     f"""
     <style>
     /* Fully responsive background image styling */
     .stApp {{
         background-image: url("data:image/jpeg;base64,{bg_base64}");
-        background-size: 100% 100%;  /* Forces the image to scale dynamically with window size */
-        background-position: center;   /* Centers the image */
-        background-repeat: no-repeat;  /* Prevents tiling */
-        background-attachment: fixed;  /* Keeps it locked in place on scroll */
+        background-size: cover;  /* Scales dynamically without tiling */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }}
 
-    /* Semi-transparent white card for the main content container to ensure readability */
+    /* --- LIGHT MODE STYLING (Default) --- */
     .block-container {{
-        background-color: rgba(255, 255, 255, 0.90);
+        background-color: rgba(255, 255, 255, 0.92);
         padding: 3rem;
         border-radius: 16px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         margin-top: 3rem;
+        color: #0f172a;
+    }}
+
+    /* --- DARK MODE OVERRIDES --- */
+    @media (prefers-color-scheme: dark) {{
+        .block-container {{
+            background-color: rgba(15, 23, 42, 0.90) !important;
+            color: #f8fafc !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }}
     }}
     </style>
     """,

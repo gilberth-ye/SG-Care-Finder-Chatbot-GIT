@@ -18,29 +18,29 @@ st.set_page_config(
     page_icon="🤖",
 )
 
-# Custom CSS to make the background fully responsive and auto-resize
+# Custom CSS with Light and Dark Mode Support
 st.markdown(
     f"""
     <style>
     /* Fully responsive background image styling */
     .stApp {{
         background-image: url("data:image/jpeg;base64,{bg_base64}");
-        background-size: 100% 100%0;  /* Forces the image to scale dynamically with window size */
-        background-position: center;   /* Centers the image */
-        background-repeat: no-repeat;  /* Prevents tiling */
-        background-attachment: fixed;  /* Keeps it locked in place on scroll */
+        background-size: cover;  /* Fixed typo from 100% 100%0 */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }}
 
-    /* Semi-transparent white card for the main content container to ensure readability */
+    /* --- LIGHT MODE STYLING (Default) --- */
     .block-container {{
-        background-color: rgba(255, 255, 255, 0.90);
+        background-color: rgba(255, 255, 255, 0.92);
         padding: 3rem;
         border-radius: 16px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         margin-top: 3rem;
+        color: #0f172a;
     }}
 
-    /* Card wrapper around password text input */
     div[data-testid="stTextInput"] {{
         background-color: #ffffff;
         padding: 24px;
@@ -51,11 +51,11 @@ st.markdown(
         margin-bottom: 20px;
     }}
 
-    /* Input box border and background */
     div[data-testid="stTextInput"] input {{
         border: 1px solid #cbd5e1 !important;
         border-radius: 6px !important;
         background-color: #f8fafc !important;
+        color: #0f172a !important;
         font-size: 16px !important;
     }}
 
@@ -64,7 +64,28 @@ st.markdown(
         box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
     }}
 
-    /* Button styling */
+    /* --- DARK MODE OVERRIDES --- */
+    @media (prefers-color-scheme: dark) {{
+        .block-container {{
+            background-color: rgba(15, 23, 42, 0.90) !important;
+            color: #f8fafc !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }}
+
+        div[data-testid="stTextInput"] {{
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }}
+
+        div[data-testid="stTextInput"] input {{
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+            border: 1px solid #475569 !important;
+        }}
+    }}
+
+    /* General Button Styling */
     div[data-testid="stButton"] button, div[data-testid="stFormSubmitButton"] button {{
         border-radius: 6px;
         font-weight: 600;
@@ -99,7 +120,7 @@ st.write("""
 Navigate using the **sidebar** to explore:
 
 - 💬 **Chatbot** — Have a conversation with the AI assistant
-- ℹ️ **About** — Understand the Key Features amd Components
+- ℹ️ **About** — Understand the Key Features and Components
 - ⚙️ **Methodology** — Understand the underlying architecture, RAG pipelines, and table-parsing logic
 - 📤 **Upload Doc** — Manage and ingest new support scheme documents into the knowledge base
 - ℹ️ **User Guide** — How to use the chatbot

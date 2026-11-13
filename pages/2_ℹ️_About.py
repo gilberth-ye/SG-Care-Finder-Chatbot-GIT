@@ -19,26 +19,60 @@ st.set_page_config(
     page_icon="ℹ️",
 )
 
-# Custom CSS to add the background image and style containers
+# Custom CSS with Light and Dark Mode Support
 st.markdown(
     f"""
     <style>
     /* Fully responsive background image styling */
     .stApp {{
         background-image: url("data:image/jpeg;base64,{bg_base64}");
-        background-size: 100% 100%;  /* Forces the image to scale dynamically with window size */
-        background-position: center;   /* Centers the image */
-        background-repeat: no-repeat;  /* Prevents tiling */
-        background-attachment: fixed;  /* Keeps it locked in place on scroll */
+        background-size: cover;  /* Scales dynamically without tiling */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }}
 
-    /* Semi-transparent white card for the main content container to ensure readability */
+    /* --- LIGHT MODE STYLING (Default) --- */
     .block-container {{
-        background-color: rgba(255, 255, 255, 0.90);
+        background-color: rgba(255, 255, 255, 0.92);
         padding: 3rem;
         border-radius: 16px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         margin-top: 3rem;
+        color: #0f172a;
+    }}
+
+    /* Table styling for light mode readability */
+    table {{
+        width: 100%;
+        border-collapse: collapse;
+    }}
+    th, td {{
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }}
+    th {{
+        background-color: #f1f5f9;
+    }}
+
+    /* --- DARK MODE OVERRIDES --- */
+    @media (prefers-color-scheme: dark) {{
+        .block-container {{
+            background-color: rgba(15, 23, 42, 0.90) !important;
+            color: #f8fafc !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }}
+
+        th, td {{
+            border: 1px solid #334155 !important;
+        }}
+        th {{
+            background-color: #1e293b !important;
+            color: #f8fafc !important;
+        }}
+        td {{
+            color: #cbd5e1 !important;
+        }}
     }}
     </style>
     """,
