@@ -1,6 +1,5 @@
 import base64
 import os
-import shutil
 import pdfplumber
 import streamlit as st
 from llama_index.core import (
@@ -123,7 +122,7 @@ def load_pdfs_with_tables(data_dir="data"):
 
     return documents
 
-# ── Initialize LlamaIndex RAG Engine with Automatic Refresh Check ──
+# ── Initialize LlamaIndex RAG Engine with Persistent Storage ──
 @st.cache_resource
 def initialize_rag():
     Settings.llm = OpenAI(model="gpt-4o-mini")
@@ -135,33 +134,10 @@ def initialize_rag():
     if not os.path.exists(data_dir) or not os.listdir(data_dir):
         return None
 
-    # Check if any PDF in data/ is newer than the storage folder index files
-    needs_rebuild = False
     if os.path.exists(persist_dir) and os.listdir(persist_dir):
-        try:
-            storage_mtime = os.path.getmtime(persist_dir)
-            for f in os.listdir(data_dir):
-                if f.endswith(".pdf"):
-                    pdf_path = os.path.join(data_dir, f)
-                    if os.path.getmtime(pdf_path) > storage_mtime:
-                        needs_rebuild = True
-                        break
-        except Exception:
-            needs_rebuild = True
+        storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
+        index = load_index_from_storage(storage_context)
     else:
-        needs_rebuild = True
-
-    if not needs_rebuild:
-        try:
-            storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
-            index = load_index_from_storage(storage_context)
-        except Exception:
-            needs_rebuild = True
-
-    if needs_rebuild:
-        if os.path.exists(persist_dir):
-            shutil.rmtree(persist_dir, ignore_errors=True)
-            
         documents = load_pdfs_with_tables(data_dir)
         if not documents:
             return None
