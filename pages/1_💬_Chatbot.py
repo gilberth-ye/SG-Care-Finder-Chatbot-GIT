@@ -250,6 +250,7 @@ else:
                 "1. Always answer questions regarding Singapore assistance schemes, eligibility criteria, required documents, application steps, and general guidance.\n"
                 "2. Fully answer any follow-up questions or suggestions selected by the user to help them understand their options.\n"
                 "3. Only decline queries that are completely unrelated to Singapore assistance programs or general citizen support (e.g., coding, fiction, recipe generation)."
+                "4. Strictly base your answers ONLY on the retrieved policy document context. If the requested information or scheme is not found in the uploaded documents, state clearly: 'I cannot find information on that scheme in the uploaded policy documents.' Do not use outside knowledge or general training memory."
             ),
             height=180,
         )

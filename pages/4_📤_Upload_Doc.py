@@ -99,7 +99,7 @@ if uploaded_file is not None:
 
 st.divider()
 
-# ── Manage / View Existing Documents ──────────────────────────────────────────
+# ── Manage / View Existing Documents (Read-Only) ──────────────────────────────
 st.subheader("📂 Current Knowledge Base Repository")
 
 if os.path.exists(DATA_DIR):
@@ -108,18 +108,9 @@ if os.path.exists(DATA_DIR):
     if pdf_files:
         st.info(f"Total active documents in repository: **{len(pdf_files)}**")
         
-        # Display list with an option to delete if needed
+        # Display read-only list of uploaded PDF files
         for pdf in sorted(pdf_files):
-            col1, col2 = st.columns([4, 1])
-            with col1:
-                st.text(f"📄 {pdf}")
-            with col2:
-                if st.button("🗑️ Delete", key=f"del_{pdf}"):
-                    target_path = os.path.join(DATA_DIR, pdf)
-                    if os.path.exists(target_path):
-                        os.remove(target_path)
-                        st.cache_resource.clear() # Clear cache when file is removed
-                        st.rerun()
+            st.text(f"📄 {pdf}")
     else:
         st.warning("⚠️ No PDF files currently found in the `data/` folder.")
 else:
